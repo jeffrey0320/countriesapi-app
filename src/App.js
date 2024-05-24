@@ -4,28 +4,25 @@ import caretDown from "./arrow-down.png";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    const Fetch = async () => {
-      try {
-        const response = await fetch("https://restcountries.com/v3.1/all");
-        if (!response.ok) {
-          throw new Error("HTTP error: Status ${response.status}");
-        }
-        let postsData = await response.json();
-        setData(postsData);
-      } catch (err) {
-        setData(null);
+    const fetchData = async () => {
+      const response = await fetch("https://restcountries.com/v3.1/all");
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
       }
+      const fetchedData = await response.json();
+      setData(fetchedData);
     };
 
-    Fetch();
+    fetchData();
   }, []);
 
   function searchForCountry(country) {
-    for (const i in data) {
-      if (data[i].name.common.localeCompare(country)) {
-        return data[i];
+    for (const i of data) {
+      if (data[i] === country) {
+        return i;
       }
     }
   }
@@ -53,12 +50,21 @@ function App() {
           </button>
         </div>
         <div className="countriesDiv">
-          <div className="card">
-            <h1>Germany</h1>
-            <p>Population: {searchForCountry("Germany").population}</p>
-            <p>Region: {searchForCountry("Germany").region}</p>
-            <p>Capital: </p>
-          </div>
+          {data.map((country) => {
+            return (
+              <div className="card">
+                <div className="imgDiv">
+                  <img src={country.flags.png} />
+                </div>
+                <div className="countryInfo">
+                  <h1>{country.name.common}</h1>
+                  <p>Population: {country.population}</p>
+                  <p>Region: {country.region}</p>
+                  <p>Capital: {country.capital}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
