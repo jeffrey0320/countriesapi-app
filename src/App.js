@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [data, setData] = useState([]);
+  const [showRegions, setShowRegions] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +29,15 @@ function App() {
     }
   }
 
+  function handleFilterBtn() {
+    setShowRegions(!showRegions);
+  }
+
+  function handleSearch(e) {
+    setInputValue(e.target.value);
+    searchForCountry(e.target.value);
+  }
+
   return (
     <>
       <div className="navbar">
@@ -43,11 +54,22 @@ function App() {
           className="search"
           type="text"
           placeholder="Search for a country..."
+          value={inputValue}
+          onChange={handleSearch}
         />
         <div className="filterDiv">
-          <button className="filterBtn">
+          <button className="filterBtn" onClick={handleFilterBtn}>
             Filter by Region <img src={caretDown} />
           </button>
+          {showRegions && (
+            <div className="regionsDiv">
+              <p>Africa</p>
+              <p>America</p>
+              <p>Asia</p>
+              <p>Europe</p>
+              <p>Oceania</p>
+            </div>
+          )}
         </div>
         <div className="countriesDiv">
           {data.map((country) => {
@@ -57,10 +79,12 @@ function App() {
                   <img src={country.flags.png} />
                 </div>
                 <div className="countryInfo">
-                  <h1>{country.name.common}</h1>
-                  <p>Population: {country.population}</p>
-                  <p>Region: {country.region}</p>
-                  <p>Capital: {country.capital}</p>
+                  <h2>{country.name.common}</h2>
+                  <div>
+                    <p>Population: {country.population}</p>
+                    <p>Region: {country.region}</p>
+                    <p>Capital: {country.capital}</p>
+                  </div>
                 </div>
               </div>
             );
