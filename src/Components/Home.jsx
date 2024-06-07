@@ -1,13 +1,19 @@
 import React from "react";
-import moonLogo from "../moon-regular.svg";
 import caretDown from "../arrow-down.png";
 import { useEffect, useState } from "react";
+import { Link, useNavigate, withRouter } from "react-router-dom";
 
-const Home = () => {
+const Home = ({
+  inputValue,
+  setInputValue,
+  country,
+  setCountry,
+  region,
+  setRegion,
+}) => {
   const [data, setData] = useState([]);
-  const [country, setCountry] = useState([]);
   const [showRegions, setShowRegions] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
   //const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
@@ -26,19 +32,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!inputValue) return;
-
-      try {
-        const response = await fetch(
-          `https://restcountries.com/v3.1/name/${inputValue}`,
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const fetchedData = await response.json();
-        setCountry(fetchedData);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
     };
 
     fetchData();
@@ -57,26 +50,45 @@ const Home = () => {
     setShowRegions(!showRegions);
   }
 
-  function handleSearch(e) {
-    setInputValue(e.target.value);
-    console.log(searchForCountry(inputValue));
-  }
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `https://restcountries.com/v3.1/name/${inputValue}`,
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      navigate(`/${inputValue}`);
+      const fetchedData = await response.json();
+      setCountry(fetchedData);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
-  function handleFilter() {}
+  const handleFilter = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `https://restcountries.com/v3.1/region/${region}`,
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      navigate(`/${region}`);
+      const fetchedData = await response.json();
+      setRegion(fetchedData);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
   return (
     <>
-      <div className="navbar">
-        <p className="logoP">Where in the world?</p>
-        <div className="colorMode">
-          <button className="modeBtn">
-            <img src={moonLogo} />
-          </button>
-          <p>Dark Mode</p>
-        </div>
-      </div>
       <div className="searchFilter">
-        <form>
+        <form onSubmit={handleOnSubmit}>
           <input
             className="search"
             type="text"
@@ -93,7 +105,9 @@ const Home = () => {
           </button>
           {showRegions && (
             <div className="regionsDiv">
-              <p onClick={handleFilter}>Africa</p>
+              <Link onClick={handleFilter} to={"/Africa"}>
+                Africa
+              </Link>
               <p>America</p>
               <p>Asia</p>
               <p>Europe</p>
@@ -124,7 +138,6 @@ const Home = () => {
           })}
         </div>
       </div>
-      )
     </>
   );
 };
