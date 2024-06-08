@@ -1,10 +1,13 @@
 import React from "react";
 import moonLogo from "../moon-regular.svg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <div className="navbar">
-      <p className="logoP">Where in the world?</p>
+      <Link className="logoP" to={"/"}>
+        Where in the world?
+      </Link>
       <div className="colorMode">
         <button className="modeBtn">
           <img src={moonLogo} />

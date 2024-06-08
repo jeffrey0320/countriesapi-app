@@ -10,11 +10,12 @@ const Home = ({
   setCountry,
   region,
   setRegion,
+  filteredItems,
+  setFilteredItems,
 }) => {
   const [data, setData] = useState([]);
   const [showRegions, setShowRegions] = useState(false);
   const navigate = useNavigate();
-  //const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,14 +38,6 @@ const Home = ({
     fetchData();
     console.log(country);
   }, [inputValue]);
-
-  function searchForCountry(country) {
-    for (const i of data) {
-      if (data[i] === country) {
-        return i;
-      }
-    }
-  }
 
   function handleFilterBtn() {
     setShowRegions(!showRegions);
@@ -79,7 +72,7 @@ const Home = ({
       }
       navigate(`/${region}`);
       const fetchedData = await response.json();
-      setRegion(fetchedData);
+      setFilteredItems(fetchedData);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -105,13 +98,46 @@ const Home = ({
           </button>
           {showRegions && (
             <div className="regionsDiv">
-              <Link onClick={handleFilter} to={"/Africa"}>
-                Africa
+              <Link
+                onClick={() => {
+                  setRegion("Africa");
+                }}
+                to={"/Africa"}
+              >
+                <p onClick={handleFilter}>Africa</p>
               </Link>
-              <p>America</p>
-              <p>Asia</p>
-              <p>Europe</p>
-              <p>Oceania</p>
+              <Link
+                onClick={() => {
+                  setRegion("Americas");
+                }}
+                to={"/Americas"}
+              >
+                <p onClick={handleFilter}>Americas</p>
+              </Link>
+              <Link
+                onClick={() => {
+                  setRegion("Asia");
+                }}
+                to={"/Asia"}
+              >
+                <p onClick={handleFilter}>Asia</p>
+              </Link>
+              <Link
+                onClick={() => {
+                  setRegion("Europe");
+                }}
+                to={"/Europe"}
+              >
+                <p onClick={handleFilter}>Europe</p>
+              </Link>
+              <Link
+                onClick={() => {
+                  setRegion("Oceania");
+                }}
+                to={"/Oceania"}
+              >
+                <p onClick={handleFilter}>Oceania</p>
+              </Link>
             </div>
           )}
         </div>
