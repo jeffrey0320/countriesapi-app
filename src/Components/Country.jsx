@@ -1,8 +1,17 @@
 import React from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Country = ({ data }) => {
+  const navigate = useNavigate();
   return (
     <div className="countriesDiv">
+      <button
+        onClick={() => {
+          navigate(-2);
+        }}
+      >
+        Back
+      </button>
       {data.map((country, index) => {
         return (
           <div className="card" key={index}>

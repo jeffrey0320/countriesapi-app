@@ -30,8 +30,11 @@ function App() {
             />
           }
         />
+        /*
         <Route path={`/${inputValue}`} element={<Country data={country} />} />
+        */ /*
         <Route path={`/${region}`} element={<Country data={filteredItems} />} />
+        */
       </Routes>
     </>
   );

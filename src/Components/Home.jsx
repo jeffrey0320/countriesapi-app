@@ -29,15 +29,26 @@ const Home = ({
 
     fetchData();
   }, []);
-
+  /*
   useEffect(() => {
     const fetchData = async () => {
-      if (!inputValue) return;
+      try {
+        const response = await fetch(
+          `https://restcountries.com/v3.1/region/${region}`,
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        //navigate(`/${region}`);
+        const fetchedData = await response.json();
+        setFilteredItems(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
     };
 
     fetchData();
-    console.log(country);
-  }, [inputValue]);
+  }, []);*/
 
   function handleFilterBtn() {
     setShowRegions(!showRegions);
@@ -60,8 +71,9 @@ const Home = ({
     }
   };
 
-  const handleFilter = async (e) => {
-    e.preventDefault();
+  const handleFilter = async (region) => {
+    setRegion(region);
+    navigate(`/${region}`);
 
     try {
       const response = await fetch(
@@ -70,7 +82,7 @@ const Home = ({
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      navigate(`/${region}`);
+      //navigate(`/${region}`);
       const fetchedData = await response.json();
       setFilteredItems(fetchedData);
     } catch (error) {
@@ -98,22 +110,9 @@ const Home = ({
           </button>
           {showRegions && (
             <div className="regionsDiv">
-              <Link
-                onClick={() => {
-                  setRegion("Africa");
-                }}
-                to={"/Africa"}
-              >
-                <p onClick={handleFilter}>Africa</p>
-              </Link>
-              <Link
-                onClick={() => {
-                  setRegion("Americas");
-                }}
-                to={"/Americas"}
-              >
-                <p onClick={handleFilter}>Americas</p>
-              </Link>
+              <p onClick={handleFilter("Africa")}> Africa</p>
+              <p onClick={handleFilter("Americas")}>Americas</p>
+              /*
               <Link
                 onClick={() => {
                   setRegion("Asia");
@@ -138,6 +137,7 @@ const Home = ({
               >
                 <p onClick={handleFilter}>Oceania</p>
               </Link>
+              */
             </div>
           )}
         </div>
