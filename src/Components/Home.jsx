@@ -1,7 +1,7 @@
 import React from "react";
 import caretDown from "../arrow-down.png";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, withRouter } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = ({
   inputValue,
@@ -30,25 +30,27 @@ const Home = ({
     fetchData();
   }, []);
   /*
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://restcountries.com/v3.1/region/${region}`,
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(
+            `https://restcountries.com/v3.1/region/${region}`,
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const fetchedData = await response.json();
+          setFilteredItems(fetchedData);
+          //navigate(`/${region}`);
+        } catch (error) {
+          console.error("Error fetching data: ", error);
         }
-        //navigate(`/${region}`);
-        const fetchedData = await response.json();
-        setFilteredItems(fetchedData);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
+      };
+  
+      if (region) {
+        fetchData();
       }
-    };
-
-    fetchData();
-  }, []);*/
+    }, [region]);*/
 
   function handleFilterBtn() {
     setShowRegions(!showRegions);
@@ -71,23 +73,22 @@ const Home = ({
     }
   };
 
-  const handleFilter = async (region) => {
-    setRegion(region);
-    navigate(`/${region}`);
+  const handleFilter = async (e) => {
+    setRegion(e.target.outerText);
 
     try {
       const response = await fetch(
-        `https://restcountries.com/v3.1/region/${region}`,
+        `https://restcountries.com/v3.1/region/${e.target.outerText}`,
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      //navigate(`/${region}`);
       const fetchedData = await response.json();
       setFilteredItems(fetchedData);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
+    navigate(`/${e.target.outerText}`);
   };
 
   return (
@@ -110,34 +111,13 @@ const Home = ({
           </button>
           {showRegions && (
             <div className="regionsDiv">
-              <p onClick={handleFilter("Africa")}> Africa</p>
-              <p onClick={handleFilter("Americas")}>Americas</p>
-              /*
-              <Link
-                onClick={() => {
-                  setRegion("Asia");
-                }}
-                to={"/Asia"}
-              >
-                <p onClick={handleFilter}>Asia</p>
-              </Link>
-              <Link
-                onClick={() => {
-                  setRegion("Europe");
-                }}
-                to={"/Europe"}
-              >
-                <p onClick={handleFilter}>Europe</p>
-              </Link>
-              <Link
-                onClick={() => {
-                  setRegion("Oceania");
-                }}
-                to={"/Oceania"}
-              >
-                <p onClick={handleFilter}>Oceania</p>
-              </Link>
-              */
+              <ul>
+                <li onClick={handleFilter}>Africa</li>
+                <li onClick={handleFilter}>Asia</li>
+                <li onClick={handleFilter}>Americas</li>
+                <li onClick={handleFilter}>Europe</li>
+                <li onClick={handleFilter}>Oceania</li>
+              </ul>
             </div>
           )}
         </div>

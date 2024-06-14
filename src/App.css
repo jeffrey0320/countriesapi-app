@@ -82,20 +82,14 @@ body {
     position: absolute;
     top: 3rem;
     height: fit-content;
-    width: 50%;
+    width: fit-content;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 1px 1px 1px 1px;
     background-color: white;
 
-    & a {
-      text-decoration: none;
-      font-weight: 700;
-      color: black;
-    }
-
-    & a:hover {
-      color: blue;
+    & ul {
+      list-style: none;
     }
   }
 }
@@ -132,5 +126,12 @@ body {
       height: 50%;
       padding: 1rem;
     }
+  }
+
+  .details {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

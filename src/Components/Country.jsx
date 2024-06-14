@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Country = ({ data }) => {
   const navigate = useNavigate();
@@ -7,14 +7,14 @@ const Country = ({ data }) => {
     <div className="countriesDiv">
       <button
         onClick={() => {
-          navigate(-2);
+          navigate(-1);
         }}
       >
         Back
       </button>
       {data.map((country, index) => {
         return (
-          <div className="card" key={index}>
+          <div className="card details" key={index}>
             <div className="imgDiv">
               <img
                 src={country.flags.png}
@@ -24,6 +24,7 @@ const Country = ({ data }) => {
             <div className="countryInfo">
               <h2>{country.name.common}</h2>
               <div>
+                <p>Native Name: {country.nativeName}</p>
                 <p>Population: {country.population}</p>
                 <p>Region: {country.region}</p>
                 <p>Capital: {country.capital}</p>
