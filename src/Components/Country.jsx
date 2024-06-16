@@ -1,20 +1,24 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import leftArrow from "../arrow-left-solid.svg";
 
 const Country = ({ data }) => {
   const navigate = useNavigate();
+  console.log(data.length);
   return (
     <div className="countriesDiv">
       <button
+        className="backButton"
         onClick={() => {
           navigate(-1);
         }}
       >
+        <img src={leftArrow} />
         Back
       </button>
       {data.map((country, index) => {
         return (
-          <div className="card details" key={index}>
+          <div className="card" key={index}>
             <div className="imgDiv">
               <img
                 src={country.flags.png}
@@ -24,7 +28,6 @@ const Country = ({ data }) => {
             <div className="countryInfo">
               <h2>{country.name.common}</h2>
               <div>
-                <p>Native Name: {country.nativeName}</p>
                 <p>Population: {country.population}</p>
                 <p>Region: {country.region}</p>
                 <p>Capital: {country.capital}</p>
