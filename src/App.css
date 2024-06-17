@@ -136,20 +136,38 @@ body {
     box-shadow: none;
     gap: 5rem;
   }
+}
 
-  .backButton {
+.backBtnDiv {
+  padding-top: 2rem;
+  padding-left: 2rem;
+  width: 100%;
+}
+
+.backButton {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  align-self: self-start;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  box-shadow: none;
+
+  & img {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+@media (min-width: 800px) {
+  .countriesDiv {
     display: flex;
-    gap: 0.5rem;
-    padding: 0.5rem 1.4rem;
-    align-self: self-start;
-    background-color: white;
-    cursor: pointer;
-    border-radius: 0.3rem;
-    box-shadow: none;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-    & img {
-      height: 20px;
-      width: 20px;
+    & .backButton {
+      align-self: flex-end;
     }
   }
 }
