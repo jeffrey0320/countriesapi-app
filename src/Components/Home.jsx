@@ -132,7 +132,7 @@ const Home = ({
                   />
                 </div>
                 <div className="countryInfo">
-                  <h2>{country.name.common}</h2>
+                  <h3>{country.name.common}</h3>
                   <div>
                     <p>Population: {country.population}</p>
                     <p>Region: {country.region}</p>
