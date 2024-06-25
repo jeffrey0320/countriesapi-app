@@ -21,7 +21,7 @@ const Country = ({ data }) => {
       <div className="countriesDiv">
         {data.map((country, index) => {
           return (
-            <div className="card" key={index}>
+            <div className={data > 1 ? "card" : "card details"} key={index}>
               <div className="imgDiv">
                 <img
                   src={country.flags.png}
@@ -30,10 +30,17 @@ const Country = ({ data }) => {
               </div>
               <div className="countryInfo">
                 <h3>{country.name.common}</h3>
-                <div>
-                  <p>Population: {country.population}</p>
-                  <p>Region: {country.region}</p>
-                  <p>Capital: {country.capital}</p>
+                <div className="data">
+                  <span>
+                    <strong>Population: </strong>{" "}
+                    {country.population.toLocaleString()}
+                  </span>
+                  <span>
+                    <strong>Region:</strong> {country.region}
+                  </span>
+                  <span>
+                    <strong>Capital:</strong> {country.capital}
+                  </span>
                 </div>
               </div>
             </div>

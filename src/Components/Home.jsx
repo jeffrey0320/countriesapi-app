@@ -133,10 +133,17 @@ const Home = ({
                 </div>
                 <div className="countryInfo">
                   <h3>{country.name.common}</h3>
-                  <div>
-                    <p>Population: {country.population}</p>
-                    <p>Region: {country.region}</p>
-                    <p>Capital: {country.capital}</p>
+                  <div className="data">
+                    <span>
+                      <strong>Population: </strong>{" "}
+                      {country.population.toLocaleString()}
+                    </span>
+                    <span>
+                      <strong>Region:</strong> {country.region}
+                    </span>
+                    <span>
+                      <strong>Capital:</strong> {country.capital}
+                    </span>
                   </div>
                 </div>
               </div>
