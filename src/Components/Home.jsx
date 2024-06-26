@@ -91,6 +91,22 @@ const Home = ({
     navigate(`/${e.target.outerText}`);
   };
 
+  const clickCard = async (data) => {
+    try {
+      const response = await fetch(
+        `https://restcountries.com/v3.1/name/${data}`,
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const fetchedData = await response.json();
+      setCountry(fetchedData);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+    navigate(`/${data.name.common}`);
+  };
+
   return (
     <>
       <div className="searchFilter">
@@ -124,7 +140,13 @@ const Home = ({
         <div className="countriesDiv">
           {data.map((country, index) => {
             return (
-              <div className="card" key={index}>
+              <div
+                className="card"
+                key={index}
+                onClick={() => {
+                  navigate(`/${country.name.common}`);
+                }}
+              >
                 <div className="imgDiv">
                   <img
                     src={country.flags.png}

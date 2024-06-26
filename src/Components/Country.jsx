@@ -4,7 +4,6 @@ import leftArrow from "../arrow-left-solid.svg";
 
 const Country = ({ data }) => {
   const navigate = useNavigate();
-  console.log(data.length);
   return (
     <>
       <div className="backBtnDiv">
@@ -21,7 +20,10 @@ const Country = ({ data }) => {
       <div className="countriesDiv">
         {data.map((country, index) => {
           return (
-            <div className={data > 1 ? "card" : "card details"} key={index}>
+            <div
+              className={data.length > 1 ? "card" : "card details"}
+              key={index}
+            >
               <div className="imgDiv">
                 <img
                   src={country.flags.png}
