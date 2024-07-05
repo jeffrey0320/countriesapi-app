@@ -91,10 +91,10 @@ const Home = ({
     navigate(`/${e.target.outerText}`);
   };
 
-  const clickCard = async (data) => {
+  const clickCard = async (country) => {
     try {
       const response = await fetch(
-        `https://restcountries.com/v3.1/name/${data}`,
+        `https://restcountries.com/v3.1/name/${country}`,
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -104,7 +104,7 @@ const Home = ({
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
-    navigate(`/${data.name.common}`);
+    navigate(`/${country}`);
   };
 
   return (
@@ -144,7 +144,7 @@ const Home = ({
                 className="card"
                 key={index}
                 onClick={() => {
-                  navigate(`/${country.name.common}`);
+                  clickCard(country.name.common);
                 }}
               >
                 <div className="imgDiv">
